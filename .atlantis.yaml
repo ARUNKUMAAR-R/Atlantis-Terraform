@@ -12,9 +12,7 @@ workflows:
   myworkflow:
     plan:
       steps:
-        - run:
-            command: terraform init -input=false
-            output: hide
+        - run: terraform init -input=false
         - run: terraform plan -input=false -var-file=vars_dev.tfvars -out $PLANFILE
     apply:
       steps:
