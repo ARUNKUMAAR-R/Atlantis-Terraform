@@ -1,19 +1,20 @@
 version: 3
-
 projects:
   - name: network
     dir: network
-    workflow: custom
+    workflow: myworkflow
+    terraform_version: v1.3.0
     autoplan:
-      when_modified: ["*.tf", "*.tfvars"]
       enabled: true
+      when_modified: ["*.tf", "*.tfvars"]
 
 workflows:
-  custom:
+  myworkflow:
     plan:
       steps:
-        - run: terraform plan -var-file=vars_dev.tfvars
+        - run: terraform init -input=false
+        - run: terraform plan -input=false -var-file=vars_dev.tfvars -out $PLANFILE
     apply:
       steps:
-        - run: terraform apply -var-file=vars_dev.tfvars
+        - run: terraform apply $PLANFILE
 
