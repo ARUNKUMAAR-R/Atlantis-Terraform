@@ -1,23 +1,22 @@
 version: 3
 projects:
-  - name: azure-network
+  - name: network
     dir: network
-    workspace: default
+    workflow: myworkflow
     terraform_version: v1.3.0
     autoplan:
-      when_modified: ["*.tf", "*.tfvars"]
       enabled: true
-    apply_requirements: []
-    workflow: custom
+      when_modified: ["*.tf", "*.tfvars"]
 
 workflows:
-  custom:
+  myworkflow:
     plan:
       steps:
-        - init
-        - plan:
-            extra_args: ["-var-file=vars_dev.tfvars"]
+        - run:
+            command: terraform init -input=false
+            output: hide
+        - run: terraform plan -input=false -var-file=vars_dev.tfvars -out $PLANFILE
     apply:
       steps:
-        - apply
+        - run: terraform apply $PLANFILE
 
