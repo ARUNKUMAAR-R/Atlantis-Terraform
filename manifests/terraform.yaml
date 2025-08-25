@@ -11,9 +11,24 @@ spec:
   sourceRef:
     kind: GitRepository
     name: terraform-repo
-  varsFrom:
-    - kind: VariableFile
-      name: vars_dev.tfvars
+  vars:
+    - name: vnet_name
+      value: "vnet1"
+    - name: resource_group_name
+      value: "rg112"
+    - name: resource_group_location
+      value: "japaneast"
+    - name: address_space
+      value: "10.0.0.0/16"
+    - name: subnet_names
+      value: "[\"web\", \"app\", \"db\"]"
+    - name: subnet_prefixes
+      value: "[\"10.0.1.0/24\", \"10.0.2.0/24\", \"10.0.3.0/24\"]"
+    - name: tags
+      value: |
+        {
+          environment = "development"
+        }
   runnerPodTemplate:
     spec:
       containers:
