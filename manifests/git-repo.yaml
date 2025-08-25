@@ -1,0 +1,12 @@
+# git-repo.yaml
+apiVersion: source.toolkit.fluxcd.io/v1
+kind: GitRepository
+metadata:
+  name: terraform-repo
+  namespace: terraform-system
+spec:
+  interval: 1m0s
+  url: https://github.com/ARUNKUMAAR-R/Atlantis-Terraform
+  ref:
+    branch: main
+

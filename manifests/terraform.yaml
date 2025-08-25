@@ -1,0 +1,22 @@
+# terraform.yaml
+apiVersion: infra.contrib.fluxcd.io/v1alpha2
+kind: Terraform
+metadata:
+  name: network-tf
+  namespace: terraform-system
+spec:
+  interval: 5m
+  approvePlan: auto
+  path: ./network
+  sourceRef:
+    kind: GitRepository
+    name: terraform-repo
+  vars:
+    - name: TF_VAR_example
+      value: "example"
+  runnerPodTemplate:
+    spec:
+      containers:
+        - name: main
+          image: ghcr.io/weaveworks/tf-runner:v0.16.0
+
